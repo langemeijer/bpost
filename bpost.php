@@ -1764,7 +1764,7 @@ class bPostDeliveryMethod
  */
 class bPostDeliveryMethodAtHome extends bPostDeliveryMethod
 {
-	private $normal, $insured;
+	private $normal, $insured, $signed;
 
 	/**
 	 * @var bool
@@ -1792,6 +1792,16 @@ class bPostDeliveryMethodAtHome extends bPostDeliveryMethod
 	}
 
 	/**
+	 * Get signed
+	 *
+	 * @return mixed
+	 */
+	public function getSigned()
+	{
+		return $this->signed;
+	}
+
+	/**
 	 * Set drop at the door
 	 *
 	 * @param bool $dropAtTheDoor
@@ -1816,6 +1826,26 @@ class bPostDeliveryMethodAtHome extends bPostDeliveryMethod
 	}
 
 	/**
+	 * Set signed
+	 *
+	 * @return mixed
+	 */
+	public function setSigned()
+	{
+		$this->signed['signature'] = null;
+	}
+
+	/**
+	 * Set signed plus
+	 *
+	 * @return mixed
+	 */
+	public function setSignedPlus()
+	{
+		$this->signed['signaturePlus'] = null;
+	}
+
+	/**
 	 * Return the object as an array for usage in the XML
 	 *
 	 * @return array
@@ -1837,6 +1867,10 @@ class bPostDeliveryMethodAtHome extends bPostDeliveryMethod
 		{
 			if($this->insurance == 0) $data['atHome']['insured']['basicInsurance'] = '';
 			else $data['atHome']['insured']['additionalInsurance']['@attributes']['value'] = $this->insurance;
+		}
+		if($this->signed !== null)
+		{
+			$data['atHome']['signed'] = $this->signed;
 		}
 		if($this->dropAtTheDoor) $data['atHome']['dropAtTheDoor'] = null;
 
